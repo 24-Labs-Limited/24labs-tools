@@ -1,86 +1,89 @@
-# 24labs-tools 🧰
+# 🛠 24labs-tools
 
-A growing collection of small, modular Go utilities ("Lego bricks") built and maintained by [24labs](https://github.com/24labs).  
+A collection of reusable **Go utilities** designed for **fintech, payments, and systems programming**.  
+Each tool is structured as a library under `pkg/` with a corresponding CLI under `cmd/`.  
 
-Each tool is designed to be:
-- **Reusable** — clean packages under `pkg/`
-- **Accessible** — thin CLI wrappers under `cmd/`
-- **Educational** — built step-by-step to deepen Go expertise
+This repo is actively developed and will expand to cover **ISO 8583 message processing, BCD utilities, Transact TPH helpers**, and more.  
 
 ---
 
-## 📦 Structure
+## 📂 Structure
 
 ```
 24labs-tools/
-├── cmd/           # CLI entrypoints
-│   └── numconvert # Example: number base converter CLI
-│       └── main.go
 │
-└── pkg/           # Reusable libraries
-    └── numconvert # Example: number base converter package
-        └── convert.go
+├── pkg/            # Reusable libraries
+│   ├── numconvert/ # Numeric base conversions + BCD
+│   ├── bcdutil/    # (planned) Dedicated BCD utilities
+│   ├── tphutil/    # (planned) Transact TPH helpers
+│   └── ...
+│
+├── cmd/            # CLI entrypoints
+│   ├── numconvert/
+│   ├── bcdutil/
+│   └── tphutil/
+│
+├── ROADMAP.md      # High-level roadmap of tools
+├── CHANGELOG.md    # Top-level changelog
+└── README.md       # This file
 ```
-
-- **`pkg/`** — reusable Go packages  
-- **`cmd/`** — small CLI tools that call into `pkg/`
 
 ---
 
-## 🧱 Available Tools
+## ✨ Current Tools
 
 ### 🔢 numconvert
-A number base conversion utility.
+Numeric base conversions (binary, decimal, octal, hexadecimal) + **BCD utilities**.  
+- Detect base automatically (prefix-aware).  
+- Convert between bases.  
+- Encode/decode BCD.  
+- Includes CLI:  
+  ```bash
+  go run ./cmd/numconvert
+  ```
+  Example:
+  ```
+  Enter a number (prefix with 0B for binary, 0X for hex): 0B1010
+  Decimal: 10
+  Binary: 0B00001010
+  Hex: 0X0A
+  Octal: 012
+  ```
 
-- Input a number in **binary (`0B...`)**, **hex (`0X...`)**, or **decimal**
-- Outputs the number in **decimal, binary, and hex**
+📖 See [pkg/numconvert/README.md](./pkg/numconvert/README.md) for details.  
 
-#### Example
+---
 
+## 📍 Roadmap
+- **bcdutil** → Standalone BCD encoder/decoder with advanced options.  
+- **tphutil** → Tools for parsing and building Transact TPH structures.  
+- **iso8583util** → Message parsing/validation for ISO 8583.  
+- Additional fintech/system utilities to be added iteratively.  
+
+See [ROADMAP.md](./ROADMAP.md) for the full plan.  
+
+---
+
+## 🧪 Testing
+Run all tests:  
 ```bash
-go run cmd/numconvert/main.go
+go test ./... -cover
 ```
 
-```
-Enter a number (prefix with 0B for binary, 0X for hex): 42
-Decimal: 42
-Binary: 0B00101010
-Hex: 0X2A
+Run specific tool tests:  
+```bash
+go test ./pkg/numconvert -v
 ```
 
 ---
 
-## 🚀 Getting Started
-
-Clone the repo:
-
+## 📦 Installation
+Each tool can be imported individually, e.g.:  
 ```bash
-git clone git@github.com:24labs/24labs-tools.git
-cd 24labs-tools
+go get github.com/24labs/24labs-tools/pkg/numconvert
 ```
-
-Run any tool:
-
-```bash
-go run cmd/numconvert/main.go
-```
-
-Import a library in your Go project:
-
-```go
-import "github.com/24labs/24labs-tools/pkg/numconvert"
-```
-
----
-
-## 🌱 Roadmap
-
-- Add more small, composable Go utilities
-- Unit tests for each package
-- CI with GitHub Actions
 
 ---
 
 ## 📜 License
-
-MIT © [24labs](https://github.com/24labs)
+MIT License © 24labs
